@@ -25,6 +25,7 @@ struct MusicalGenre: Hashable, Codable, Identifiable {
     var minBpm : Float
     var maxBpm : Float
     var description : String
+    var descriptionTempo : String
     var category: Category
     fileprivate var imageName : String
     fileprivate var loopName : String

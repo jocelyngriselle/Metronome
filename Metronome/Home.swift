@@ -49,7 +49,7 @@ struct CategoryHome: View {
                     Text("See All")
                 }
             }
-            .navigationBarTitle(Text("Musical styles"))
+            .navigationBarTitle(Text("Pick your style"))
             .navigationBarItems(trailing: profileButton)
             .sheet(isPresented: $showingProfile) {
                 Text("User Profile")

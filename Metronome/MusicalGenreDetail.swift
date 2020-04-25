@@ -14,24 +14,32 @@ struct MusicalGenreDetail: View {
     var musicalGenre: MusicalGenre
     
     var body: some View {
-        VStack {
-            ZStack {
-                musicalGenre.image
-                .resizable()
-                .scaledToFill()
-                .frame(height: 200)
-                .clipped()
-                Text(musicalGenre.name)
-                    .font(.title)
+        GeometryReader { geometry in
+            VStack(alignment: .center) {
+                ZStack {
+                    self.musicalGenre.image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 300)
+                        .clipped()
+                    Text(" \(self.musicalGenre.name) ")
+                        .font(.title)
+                        .fontWeight(.black)
+                        .foregroundColor(Color.black)
+                        .background(Color.white)
+                }.frame(maxWidth: geometry.size.width).fixedSize()
+                Text(self.musicalGenre.description)
+                    .font(.footnote)
                     .fontWeight(.black)
-                .foregroundColor(Color.white)
-            }
-            Text("\" \(musicalGenre.description) \"")
-                .font(.footnote)
-                .fontWeight(.black)
-            .foregroundColor(Color.black)
-            BPMPlayerView(genre: musicalGenre)
-        }
+                    .foregroundColor(Color.black)
+                    .frame(width: geometry.size.width - 20)
+                Text(self.musicalGenre.descriptionTempo)
+                    .font(.footnote)
+                    .fontWeight(.black)
+                    .foregroundColor(Color.black).frame(width: geometry.size.width - 20)
+                BPMPlayerView(genre: self.musicalGenre)
+            }.frame(width: geometry.size.width, alignment: Alignment.top)
+        }.frame(maxHeight: .infinity).frame(maxHeight: .infinity)
     }
 }
 
@@ -83,9 +91,9 @@ struct BPMPlayerView: View {
         let audioFrameCount = UInt32(audioFile.length)
         let audioFileBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: audioFrameCount)
         try? audioFile.read(into: audioFileBuffer!)
-
+        
         try? engine.start()
-
+        
         // audioPlayer.play() TODO autoplay at start ?
         audioPlayer.scheduleBuffer(audioFileBuffer!, at: nil, options:.loops, completionHandler: nil)
         
@@ -96,10 +104,10 @@ struct BPMPlayerView: View {
     func play() {
         isPlaying = true
         audioPlayer.play()
-//        let audioFormat = genre.file!.processingFormat
-//        let audioFrameCount = UInt32(genre.file!.length)
-//        let audioFileBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: audioFrameCount)!
-//        audioPlayer.scheduleBuffer(audioFileBuffer, at: nil, options:.loops, completionHandler: nil)
+        //        let audioFormat = genre.file!.processingFormat
+        //        let audioFrameCount = UInt32(genre.file!.length)
+        //        let audioFileBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: audioFrameCount)!
+        //        audioPlayer.scheduleBuffer(audioFileBuffer, at: nil, options:.loops, completionHandler: nil)
     }
     
     func pause() {
@@ -145,56 +153,54 @@ struct BPMPlayerView: View {
     
     @ViewBuilder
     var body: some View {
-        VStack(spacing: 24.0) {
-            Text(String(format: "BPM: %.0f", bpm))
-                .font(.title)
-                .fontWeight(.black)
-                .padding(0.0)
-            Slider(value: $bpm, in: self.genre.minBpm...self.genre.maxBpm, step: 1.0, onEditingChanged: onEditingChanged)
-            
-//            Text(String(format: "Pitch: %.2f", pitch))
-//                .font(.title)
-//                .fontWeight(.black)
-//                .padding(0.0)
-//            Slider(value: $pitch, in: -2400...2400, step: 10.0, onEditingChanged: onEditingChanged)
-            
-            HStack(alignment: .bottom, spacing: 10.0) {
-                Button(action: {
-                    self.stop()
-                }, label: {
-                    AudioButton(name: "stop.circle")
-                })
-                Button(action: {
-                    if self.isPlaying {
-                        self.pause()
+        GeometryReader { geometry in
+            VStack(spacing: 24.0) {
+                Text(String(format: "BPM: %.0f", self.bpm))
+                    .font(.title)
+                    .fontWeight(.black)
+                    .padding(0.0)
+                Slider(value: self.$bpm, in: self.genre.minBpm...self.genre.maxBpm, step: 1.0, onEditingChanged: self.onEditingChanged)
+                    .frame(width: geometry.size.width - 20)
+                
+                //            Text(String(format: "Pitch: %.2f", pitch))
+                //                .font(.title)
+                //                .fontWeight(.black)
+                //                .padding(0.0)
+                //            Slider(value: $pitch, in: -2400...2400, step: 10.0, onEditingChanged: onEditingChanged)
+                
+                HStack(alignment: .bottom, spacing: 10.0) {
+//                    Button(action: {
+//                        self.stop()
+//                    }, label: {
+//                        AudioButton(name: "stop.circle")
+//                    })
+                    Button(action: {
+                        if self.isPlaying {
+                            self.pause()
+                        }
+                        else {
+                            self.play()
+                        }
+                        
+                    }, label: {
+                        if self.isPlaying {
+                            AudioButton(name: "pause.circle")
+                        }
+                        else {
+                            AudioButton(name: "play.circle")
+                        }
                     }
-                    else {
-                        self.play()
-                    }
-                    
-                }, label: {
-                    if self.isPlaying {
-                        AudioButton(name: "pause.circle")
-                    }
-                    else {
-                        AudioButton(name: "play.circle")
-                    }
+                    )
                 }
-                )
-            }
-            .frame(width: 400.0, height: 60.0)
-            
-            Text("Playing: \(self.genre.name)")
-            .font(.title)
-            .fontWeight(.black)
-            .padding(0.0)
-        }.padding(.all, 45.0)
+                .frame(width: 400.0, height: 60.0)
+            }.padding(.all, 45.0)
+        }
     }
 }
 
 struct MusicalGenreDetail_Previews: PreviewProvider {
     static var previews: some View {
-      let userData = UserData()
+        let userData = UserData()
         return MusicalGenreDetail(musicalGenre: userData.musicalGenres[0])
             .environmentObject(userData)
     }
