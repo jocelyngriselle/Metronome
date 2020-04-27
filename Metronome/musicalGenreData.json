@@ -44,7 +44,7 @@
     },
     {
         "id": 1004,
-        "name": "Dancehall",
+        "name": "Dub Step",
         "description": "La bossa nova est un genre musical ayant émergé à la fin des années 1950 au Brésil. Issu du croisement de la samba et du cool jazz, la bossa nova se popularise significativement dans les années 1960 chez les jeunes musiciens et étudiants.",
         "descriptionTempo" : "Il se joue généralement entre 30 et 40 BPM dans les styles blabla",
         "bpm" : 98,
@@ -58,7 +58,7 @@
     },
     {
         "id": 1005,
-        "name": "Acoustic Hip-Hop",
+        "name": "Hard Hop",
         "description": "La bossa nova est un genre musical ayant émergé à la fin des années 1950 au Brésil. Issu du croisement de la samba et du cool jazz, la bossa nova se popularise significativement dans les années 1960 chez les jeunes musiciens et étudiants.",
         "descriptionTempo" : "Il se joue généralement entre 30 et 40 BPM dans les styles blabla",
         "bpm" : 140,
@@ -72,7 +72,7 @@
     },
     {
         "id": 1006,
-        "name": "Acoustic Bossa Samba",
+        "name": "House",
         "description": "La bossa nova est un genre musical ayant émergé à la fin des années 1950 au Brésil. Issu du croisement de la samba et du cool jazz, la bossa nova se popularise significativement dans les années 1960 chez les jeunes musiciens et étudiants.",
         "descriptionTempo" : "Il se joue généralement entre 30 et 40 BPM dans les styles blabla",
         "bpm" : 80,
@@ -86,7 +86,7 @@
     },
     {
         "id": 1007,
-        "name": "Dancehall",
+        "name": "60's Blues",
         "description": "La bossa nova est un genre musical ayant émergé à la fin des années 1950 au Brésil. Issu du croisement de la samba et du cool jazz, la bossa nova se popularise significativement dans les années 1960 chez les jeunes musiciens et étudiants.",
         "descriptionTempo" : "Il se joue généralement entre 30 et 40 BPM dans les styles blabla",
         "bpm" : 98,
@@ -101,7 +101,7 @@
     },
     {
         "id": 1008,
-        "name": "Acoustic Hip-Hop",
+        "name": "80's Blues",
         "description": "La bossa nova est un genre musical ayant émergé à la fin des années 1950 au Brésil. Issu du croisement de la samba et du cool jazz, la bossa nova se popularise significativement dans les années 1960 chez les jeunes musiciens et étudiants.",
         "descriptionTempo" : "Il se joue généralement entre 30 et 40 BPM dans les styles blabla",
         "bpm" : 140,
@@ -115,7 +115,7 @@
     },
     {
         "id": 1009,
-        "name": "Acoustic Bossa Samba",
+        "name": "Classic Jazz",
         "description": "La bossa nova est un genre musical ayant émergé à la fin des années 1950 au Brésil. Issu du croisement de la samba et du cool jazz, la bossa nova se popularise significativement dans les années 1960 chez les jeunes musiciens et étudiants.",
         "descriptionTempo" : "Il se joue généralement entre 30 et 40 BPM dans les styles blabla",
         "bpm" : 80,

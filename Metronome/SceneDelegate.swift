@@ -24,7 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: CategoryHome().environmentObject(UserData()))
+            let userData = UserData()
+            let musicalGenre = userData.musicalGenres[0]
+            window.rootViewController = UIHostingController(rootView: CategoryHome()
+                .environmentObject(UserData())
+                .environmentObject(MusicalGenreAudioPlayer(genre: musicalGenre))
+            )
             self.window = window
             window.makeKeyAndVisible()
         }

@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct CategoryHome: View {
+    
     var categories: [String: [MusicalGenre]] {
         Dictionary(
             grouping: musicalGenreData,
             by: { $0.category.rawValue }
         )
     }
-    
     var featured: [MusicalGenre] {
         musicalGenreData.filter { $0.isFeatured }
     }
@@ -32,27 +32,35 @@ struct CategoryHome: View {
     }
 
     var body: some View {
-        NavigationView {
-            List {
-                FeaturedMusicalGenres(musicalGenres: featured)
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .clipped()
-                    .listRowInsets(EdgeInsets())
-                
-                ForEach(categories.keys.sorted(), id: \.self) { key in
-                    CategoryRow(categoryName: key, items: self.categories[key]!)
+        GeometryReader { geometry in
+            VStack {
+                NavigationView {
+                    
+                    List {
+                        FeaturedMusicalGenres(musicalGenres: self.featured)
+                            .scaledToFill()
+                            .frame(height: 200)
+                            .clipped()
+                            .listRowInsets(EdgeInsets())
+                        
+                        ForEach(self.categories.keys.sorted(), id: \.self) { key in
+                            CategoryRow(categoryName: key, items: self.categories[key]!)
+                        }
+                        .listRowInsets(EdgeInsets())
+                        
+                        NavigationLink(destination: MusicalGenreList()) {
+                            Text("See All")
+                        }
+                    }
+                    .navigationBarTitle(Text("Pick your style"))
+                    .navigationBarItems(trailing: self.profileButton)
+                    .sheet(isPresented: self.$showingProfile) {
+                        Text("User Profile")
+                    }
+                        
+                    //MusicalGenreAudioPlayerFooterView()
                 }
-                .listRowInsets(EdgeInsets())
-                
-                NavigationLink(destination: MusicalGenreList()) {
-                    Text("See All")
-                }
-            }
-            .navigationBarTitle(Text("Pick your style"))
-            .navigationBarItems(trailing: profileButton)
-            .sheet(isPresented: $showingProfile) {
-                Text("User Profile")
+                PlayerFooterView()
             }
         }
     }
@@ -69,7 +77,10 @@ struct FeaturedMusicalGenres: View {
 
 struct CategoryHome_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryHome()
+        let userData = UserData()
+        let musicalGenre = userData.musicalGenres[0]
+        return CategoryHome()
             .environmentObject(UserData())
+            .environmentObject(MusicalGenreAudioPlayer(genre: musicalGenre))
     }
 }
