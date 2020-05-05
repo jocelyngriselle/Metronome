@@ -25,7 +25,7 @@ struct CategoryRow: View {
                         NavigationLink(
                             destination: MusicalGenreDetail(
                                 musicalGenre: musicalGenre
-                            )
+                            ).navigationBarTitle("", displayMode: .inline)
                         ) {
                             CategoryItem(musicalGenre: musicalGenre)
                         }

@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E605327724577C9E006BC9DF /* AudioPlayerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605327624577C9E006BC9DF /* AudioPlayerModal.swift */; };
+		E605327724577C9E006BC9DF /* PlayerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605327624577C9E006BC9DF /* PlayerModalView.swift */; };
 		E61263642454686300984B4A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61263632454686300984B4A /* AppDelegate.swift */; };
 		E61263662454686300984B4A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61263652454686300984B4A /* SceneDelegate.swift */; };
-		E612636A2454686500984B4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E61263692454686500984B4A /* Assets.xcassets */; };
 		E612636D2454686500984B4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E612636C2454686500984B4A /* Preview Assets.xcassets */; };
 		E61263702454686500984B4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E612636E2454686500984B4A /* LaunchScreen.storyboard */; };
 		E612637B2454686500984B4A /* MetronomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E612637A2454686500984B4A /* MetronomeTests.swift */; };
@@ -24,6 +23,9 @@
 		E61263BF2454710C00984B4A /* CategoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61263BE2454710C00984B4A /* CategoryRow.swift */; };
 		E61263C12454711300984B4A /* MusicalGenreRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61263C02454711300984B4A /* MusicalGenreRow.swift */; };
 		E673226D245718C7009CF665 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673226C245718C7009CF665 /* AudioPlayer.swift */; };
+		E68D49C62459851D00CFAE53 /* PlayerLauncherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D49C52459851D00CFAE53 /* PlayerLauncherView.swift */; };
+		E68D49C924598F6200CFAE53 /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68D49C824598F6200CFAE53 /* PlayerDetailView.swift */; };
+		E68D49CF2459D01100CFAE53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E68D49CE2459D01100CFAE53 /* Assets.xcassets */; };
 		E6A93F8F2454807A00699E80 /* musicalGenreData.json in Resources */ = {isa = PBXBuildFile; fileRef = E6A93F8E2454807A00699E80 /* musicalGenreData.json */; };
 		E6A93FAB245485C200699E80 /* acoustichiphop.wav in Resources */ = {isa = PBXBuildFile; fileRef = E6A93FA8245485C200699E80 /* acoustichiphop.wav */; };
 		E6A93FAC245485C200699E80 /* bossasambaacoustic.wav in Resources */ = {isa = PBXBuildFile; fileRef = E6A93FA9245485C200699E80 /* bossasambaacoustic.wav */; };
@@ -35,7 +37,7 @@
 		E6A93FBB2454E35400699E80 /* accordeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E6A93FB82454E35400699E80 /* accordeon.jpg */; };
 		E6A93FBC2454E35400699E80 /* indian.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E6A93FB92454E35400699E80 /* indian.jpg */; };
 		E6A93FBD2454E35400699E80 /* jazz.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E6A93FBA2454E35400699E80 /* jazz.jpg */; };
-		E6E7833724561BAA00C5494C /* AudioPlayerFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E7833624561BAA00C5494C /* AudioPlayerFooter.swift */; };
+		E6E7833724561BAA00C5494C /* PlayerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E7833624561BAA00C5494C /* PlayerFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,11 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E605327624577C9E006BC9DF /* AudioPlayerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerModal.swift; sourceTree = "<group>"; };
+		E605327624577C9E006BC9DF /* PlayerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModalView.swift; sourceTree = "<group>"; };
 		E61263602454686300984B4A /* Metronome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metronome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61263632454686300984B4A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E61263652454686300984B4A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E61263692454686500984B4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E612636C2454686500984B4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E612636F2454686500984B4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E61263712454686500984B4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,6 +80,9 @@
 		E61263BE2454710C00984B4A /* CategoryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryRow.swift; sourceTree = "<group>"; };
 		E61263C02454711300984B4A /* MusicalGenreRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicalGenreRow.swift; sourceTree = "<group>"; };
 		E673226C245718C7009CF665 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		E68D49C52459851D00CFAE53 /* PlayerLauncherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLauncherView.swift; sourceTree = "<group>"; };
+		E68D49C824598F6200CFAE53 /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
+		E68D49CE2459D01100CFAE53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E6A93F8E2454807A00699E80 /* musicalGenreData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = musicalGenreData.json; sourceTree = "<group>"; };
 		E6A93FA8245485C200699E80 /* acoustichiphop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = acoustichiphop.wav; sourceTree = "<group>"; };
 		E6A93FA9245485C200699E80 /* bossasambaacoustic.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bossasambaacoustic.wav; sourceTree = "<group>"; };
@@ -90,7 +94,7 @@
 		E6A93FB82454E35400699E80 /* accordeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = accordeon.jpg; sourceTree = "<group>"; };
 		E6A93FB92454E35400699E80 /* indian.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = indian.jpg; sourceTree = "<group>"; };
 		E6A93FBA2454E35400699E80 /* jazz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jazz.jpg; sourceTree = "<group>"; };
-		E6E7833624561BAA00C5494C /* AudioPlayerFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFooter.swift; sourceTree = "<group>"; };
+		E6E7833624561BAA00C5494C /* PlayerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,23 +147,25 @@
 			children = (
 				E61263952454692E00984B4A /* Models */,
 				E61263632454686300984B4A /* AppDelegate.swift */,
-				E61263BA2454706E00984B4A /* Home.swift */,
-				E6A93F8E2454807A00699E80 /* musicalGenreData.json */,
 				E61263652454686300984B4A /* SceneDelegate.swift */,
+				E61263BA2454706E00984B4A /* Home.swift */,
 				E61263BE2454710C00984B4A /* CategoryRow.swift */,
-				E6E7833624561BAA00C5494C /* AudioPlayerFooter.swift */,
-				E605327624577C9E006BC9DF /* AudioPlayerModal.swift */,
+				E6E7833624561BAA00C5494C /* PlayerFooterView.swift */,
+				E68D49C52459851D00CFAE53 /* PlayerLauncherView.swift */,
+				E68D49C824598F6200CFAE53 /* PlayerDetailView.swift */,
+				E605327624577C9E006BC9DF /* PlayerModalView.swift */,
 				E61263BC2454710700984B4A /* MusicalGenreList.swift */,
 				E61263C02454711300984B4A /* MusicalGenreRow.swift */,
 				E6126393245468A900984B4A /* MusicalGenreDetail.swift */,
-				E61263692454686500984B4A /* Assets.xcassets */,
+				E68D49CE2459D01100CFAE53 /* Assets.xcassets */,
 				E612636E2454686500984B4A /* LaunchScreen.storyboard */,
 				E61263712454686500984B4A /* Info.plist */,
+				E6A93F8E2454807A00699E80 /* musicalGenreData.json */,
 				E6A93FA8245485C200699E80 /* acoustichiphop.wav */,
 				E6A93FA9245485C200699E80 /* bossasambaacoustic.wav */,
 				E6A93FAA245485C200699E80 /* dancehallhip.wav */,
-				E6A93FB12454E06A00699E80 /* blues.jpg */,
 				E6A93FAE2454E06900699E80 /* dancehall.jpg */,
+				E6A93FB12454E06A00699E80 /* blues.jpg */,
 				E6A93FAF2454E06900699E80 /* hiphop.jpg */,
 				E6A93FB22454E06A00699E80 /* rock.jpg */,
 				E6A93FB82454E35400699E80 /* accordeon.jpg */,
@@ -315,10 +321,10 @@
 				E6A93F8F2454807A00699E80 /* musicalGenreData.json in Resources */,
 				E61263702454686500984B4A /* LaunchScreen.storyboard in Resources */,
 				E6A93FBB2454E35400699E80 /* accordeon.jpg in Resources */,
+				E68D49CF2459D01100CFAE53 /* Assets.xcassets in Resources */,
 				E6A93FB62454E06A00699E80 /* blues.jpg in Resources */,
 				E612636D2454686500984B4A /* Preview Assets.xcassets in Resources */,
 				E6A93FAC245485C200699E80 /* bossasambaacoustic.wav in Resources */,
-				E612636A2454686500984B4A /* Assets.xcassets in Resources */,
 				E6A93FB32454E06A00699E80 /* dancehall.jpg in Resources */,
 				E6A93FAB245485C200699E80 /* acoustichiphop.wav in Resources */,
 				E6A93FAD245485C200699E80 /* dancehallhip.wav in Resources */,
@@ -350,9 +356,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E61263B924546F4F00984B4A /* UserData.swift in Sources */,
+				E68D49C924598F6200CFAE53 /* PlayerDetailView.swift in Sources */,
+				E68D49C62459851D00CFAE53 /* PlayerLauncherView.swift in Sources */,
 				E673226D245718C7009CF665 /* AudioPlayer.swift in Sources */,
 				E61263642454686300984B4A /* AppDelegate.swift in Sources */,
-				E6E7833724561BAA00C5494C /* AudioPlayerFooter.swift in Sources */,
+				E6E7833724561BAA00C5494C /* PlayerFooterView.swift in Sources */,
 				E612639924546A3200984B4A /* Data.swift in Sources */,
 				E61263BD2454710700984B4A /* MusicalGenreList.swift in Sources */,
 				E61263972454694700984B4A /* MusicalGenre.swift in Sources */,
@@ -361,7 +369,7 @@
 				E61263BF2454710C00984B4A /* CategoryRow.swift in Sources */,
 				E61263C12454711300984B4A /* MusicalGenreRow.swift in Sources */,
 				E61263BB2454706E00984B4A /* Home.swift in Sources */,
-				E605327724577C9E006BC9DF /* AudioPlayerModal.swift in Sources */,
+				E605327724577C9E006BC9DF /* PlayerModalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Metronome/Preview Content\"";
 				DEVELOPMENT_TEAM = LV352YT37G;
 				ENABLE_PREVIEWS = YES;
@@ -547,6 +556,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Metronome/Preview Content\"";
 				DEVELOPMENT_TEAM = LV352YT37G;
 				ENABLE_PREVIEWS = YES;

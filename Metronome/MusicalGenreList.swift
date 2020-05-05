@@ -21,6 +21,7 @@ struct MusicalGenreList: View {
                 if !self.userData.showFavoritesOnly || musicalGenre.isFavorite {
                     NavigationLink(
                         destination: MusicalGenreDetail(musicalGenre: musicalGenre)
+                            .navigationBarTitle("", displayMode: .inline)
                             .environmentObject(self.userData)
                     ) {
                         MusicalGenreRow(musicalGenre: musicalGenre)

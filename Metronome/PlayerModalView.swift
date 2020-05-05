@@ -23,8 +23,17 @@ struct PlayerModalView: View {
                 }) {
                     Image(systemName: "chevron.down")
                         .foregroundColor(.black)
-                        .font(.system(size: 38, weight: .light))
+                        .font(.system(size: 24, weight: .light))
                 })
         }
+    }
+}
+
+struct PlayerModalView_Previews: PreviewProvider {
+    static var previews: some View {
+        let userData = UserData()
+        let musicalGenre = userData.musicalGenres[0]
+        return PlayerModalView(showingDetail: .constant(true))
+        .environmentObject(MusicalGenreAudioPlayer(genre: musicalGenre))
     }
 }

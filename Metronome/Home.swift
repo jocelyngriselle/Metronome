@@ -33,9 +33,8 @@ struct CategoryHome: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack {
+            VStack (spacing: 0){
                 NavigationView {
-                    
                     List {
                         FeaturedMusicalGenres(musicalGenres: self.featured)
                             .scaledToFill()
@@ -57,11 +56,10 @@ struct CategoryHome: View {
                     .sheet(isPresented: self.$showingProfile) {
                         Text("User Profile")
                     }
-                        
                     //MusicalGenreAudioPlayerFooterView()
                 }
                 PlayerFooterView()
-            }
+            }.frame( alignment: .top)
         }
     }
 }
@@ -79,8 +77,15 @@ struct CategoryHome_Previews: PreviewProvider {
     static var previews: some View {
         let userData = UserData()
         let musicalGenre = userData.musicalGenres[0]
-        return CategoryHome()
-            .environmentObject(UserData())
-            .environmentObject(MusicalGenreAudioPlayer(genre: musicalGenre))
+        return Group {
+            CategoryHome()
+                .previewDevice(PreviewDevice(rawValue: "iPhone SE"))
+                .previewDisplayName("iPhone SE")
+            CategoryHome()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11 Pro Max"))
+            .previewDisplayName("iPhone 11 Pro Max")
+        }
+        .environmentObject(UserData())
+        .environmentObject(MusicalGenreAudioPlayer(genre: musicalGenre))
     }
 }

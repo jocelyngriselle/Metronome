@@ -74,13 +74,16 @@ extension MusicalGenre {
     var image: Image {
         ImageStore.shared.image(name: imageName)
     }
+    var cgImage: CGImage {
+        ImageStore.shared.cgImage(name: imageName)
+    }
 }
 
 extension MusicalGenre {
     var loop: AVAudioFile {
         //LoopStore.shared.loop(name: loopName)
         guard
-            let url = Bundle.main.url(forResource: loopName, withExtension: "wav")
+            let url = Bundle.main.url(forResource: "\(loopName)", withExtension: "wav")//,subdirectory: "Resources")
         else {
             fatalError("Couldn't load loop \(name).wav from main bundle.")
         }

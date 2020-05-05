@@ -17,7 +17,7 @@ let musicalGenreData: [MusicalGenre] = load("musicalGenreData.json")
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
     
-    guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
+    guard let file = Bundle.main.url(forResource: filename, withExtension: nil) //, subdirectory: "Resources")
     else {
         fatalError("Couldn't find \(filename) in main bundle.")
     }
@@ -46,8 +46,16 @@ final class ImageStore {
     
     func image(name: String) -> Image {
         let index = _guaranteeImage(name: name)
-        
         return Image(images.values[index], scale: CGFloat(ImageStore.scale), label: Text(name))
+    }
+    
+    func cgImage(name: String) -> CGImage {
+        let index = _guaranteeImage(name: name)
+        let image = images.values[index]
+        if let cropped = image.cropping(to: CGRect(x: image.width/2 - image.height/2, y: 0, width: image.height, height: image.height)){
+            return cropped
+        }
+        return image
     }
 
     static func loadImage(name: String) -> CGImage {
