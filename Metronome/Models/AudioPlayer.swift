@@ -20,7 +20,6 @@ class MusicalGenreAudioPlayer : ObservableObject {
     private var pitchControl : AVAudioUnitTimePitch
     private var playerNode : AVAudioPlayerNode
     private var userData: UserData
-    //private var nowPlayingInfo : [String : Any]
     
     init(genre: MusicalGenre) {
         self.userData = UserData()
@@ -32,8 +31,9 @@ class MusicalGenreAudioPlayer : ObservableObject {
         self.speedControl = AVAudioUnitVarispeed()
         self.pitchControl = AVAudioUnitTimePitch()
         self.playerNode = AVAudioPlayerNode()
+        connect()
         setupRemoteTransportControls()
-        
+        start() // should not be in init
     }
     
     func connect() {
@@ -41,105 +41,69 @@ class MusicalGenreAudioPlayer : ObservableObject {
         engine.attach(playerNode)
         engine.attach(pitchControl)
         engine.attach(speedControl)
-        
         // arrange the parts so that output from one is input to another
         engine.connect(playerNode, to: speedControl, format: nil)
         engine.connect(speedControl, to: pitchControl, format: nil)
         engine.connect(pitchControl, to: engine.mainMixerNode, format: nil)
-        
     }
     
     func loadAudioFile() {
-        // prepare the player to play its file from the beginning
-        //playerNode.scheduleFile(genre.loop, at: nil) // TODO relevant ?
-        
         let audioFormat = genre.loop.processingFormat
         let audioFrameCount = UInt32(self.genre.loop.length)
         let audioFileBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: audioFrameCount)
         try? genre.loop.read(into: audioFileBuffer!)
-        
-//        guard let nodeTime = playerNode.lastRenderTime, let playerTime = playerNode.playerTime(forNodeTime: nodeTime) else {
-//            playerNode.scheduleFile(genre.loop, at:nil)
-//            return
-//        }
-//        playerNode.scheduleFile(genre.loop, at:playerTime)
-        //playerNode.scheduleBuffer(audioFileBuffer!, at: nil, options:.loops, completionHandler: nil)
-        //setupNowPlaying()
+        playerNode.scheduleBuffer(audioFileBuffer!, at: nil, options:.loops, completionHandler: nil)
         playerNode.scheduleFile(genre.loop, at:nil)
     }
     
     func changeMusicalGenre(genre: MusicalGenre) {
-        // prepare the player to play its file from the beginning
-        
+        stop()
         self.genre = genre
-        if !engine.isRunning {
-            start()
-        }
-        playerNode.stop()
-        loadAudioFile()
-        if self.isPlaying {
-            play()
-        }
-        else {
-            setupNowPlaying(playing: false, elapsedPlaybackTime: self.elapsedPlaybackTime())
-        }
+        start()
+        play()
     }
     
     func start() {
-        connect()
         try? engine.start()
         isRunning = true
         self.loadAudioFile()
     }
     
     func play() {
-        if !engine.isRunning {
-            start()
-        }
+        if !engine.isRunning { try? engine.start() }
         playerNode.play()
         isPlaying = true
-        setupNowPlaying(playing: true, elapsedPlaybackTime: self.elapsedPlaybackTime())
-        
+        setupNowPlaying(playing: true)
     }
     
     func pause() {
-        setupNowPlaying(playing: false, elapsedPlaybackTime: self.elapsedPlaybackTime())
+        setupNowPlaying(playing: false)
         isPlaying = false
         playerNode.pause()
-    }
-    
-    func nextMusicalGenre() -> MusicalGenre {
-        if let index = self.userData.musicalGenres.firstIndex(of: self.genre) {
-            return self.userData.musicalGenres[(index+1) % self.userData.musicalGenres.count]
-        }
-        return self.userData.musicalGenres[0]
-    }
-    
-    func previousMusicalGenre() -> MusicalGenre {
-        if let index = self.userData.musicalGenres.firstIndex(of: self.genre) {
-            return self.userData.musicalGenres[(index-1) % self.userData.musicalGenres.count]
-        }
-        return self.userData.musicalGenres[0]
+        engine.pause()
     }
     
     func next() {
-        changeMusicalGenre(genre: self.nextMusicalGenre())
+        if let index = self.userData.musicalGenres.firstIndex(of: self.genre) {
+            changeMusicalGenre(genre: self.userData.musicalGenres[(index+1) % self.userData.musicalGenres.count])
+        }
+        changeMusicalGenre(genre:self.userData.musicalGenres[0])
     }
     
     func previous() {
-        changeMusicalGenre(genre: self.previousMusicalGenre())
+        if let index = self.userData.musicalGenres.firstIndex(of: self.genre) {
+            changeMusicalGenre(genre: self.userData.musicalGenres[(index-1) % self.userData.musicalGenres.count])
+        }
+        changeMusicalGenre(genre:self.userData.musicalGenres[0])
     }
     
     func stop() {
         playerNode.stop()
         engine.stop()
-        isPlaying = false
-        isRunning = false
         withAnimation {
             isPlaying = playerNode.isPlaying
             isRunning = engine.isRunning
         }
-        setupNowPlaying()
     }
     
     func setRate(rate : Float) {
@@ -164,12 +128,10 @@ class MusicalGenreAudioPlayer : ObservableObject {
     }
     
     func setupRemoteTransportControls() {
-        // Get the shared MPRemoteCommandCenter
         let commandCenter = MPRemoteCommandCenter.shared()
         // Disable all buttons you will not use (including pause and togglePlayPause commands)
-        [
-            commandCenter.changeRepeatModeCommand, commandCenter.stopCommand, commandCenter.changeShuffleModeCommand, commandCenter.changePlaybackRateCommand, commandCenter.seekBackwardCommand, commandCenter.seekForwardCommand, commandCenter.skipBackwardCommand, commandCenter.skipForwardCommand, commandCenter.changePlaybackPositionCommand, commandCenter.ratingCommand, commandCenter.likeCommand, commandCenter.dislikeCommand, commandCenter.bookmarkCommand].forEach {
-                $0.isEnabled = false
+        [commandCenter.changeRepeatModeCommand, commandCenter.stopCommand, commandCenter.changeShuffleModeCommand, commandCenter.changePlaybackRateCommand, commandCenter.seekBackwardCommand, commandCenter.seekForwardCommand, commandCenter.skipBackwardCommand, commandCenter.skipForwardCommand, commandCenter.changePlaybackPositionCommand, commandCenter.ratingCommand, commandCenter.likeCommand, commandCenter.dislikeCommand, commandCenter.bookmarkCommand].forEach {
+            $0.isEnabled = false
         }
         commandCenter.playCommand.addTarget { [unowned self] event in
             self.play()
@@ -191,15 +153,6 @@ class MusicalGenreAudioPlayer : ObservableObject {
             return .success
             //return .commandFailed
         }
-        commandCenter.togglePlayPauseCommand.addTarget { [unowned self] event in
-            if self.isPlaying {
-                self.pause()
-            } else {
-                self.play()
-            }
-            return .success
-            //return .commandFailed
-        }
     }
     
     func elapsedPlaybackTime() -> Double {
@@ -209,32 +162,37 @@ class MusicalGenreAudioPlayer : ObservableObject {
         return Double(TimeInterval(playerTime.sampleTime) / playerTime.sampleRate)
     }
     
-    func setupNowPlaying(playing:Bool=false, elapsedPlaybackTime:Double=0.0) {
-        
-        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-        var nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
-        nowPlayingInfo[MPMediaItemPropertyTitle] = self.genre.name
-        nowPlayingInfo[MPMediaItemPropertyArtist] = "\(Int(self.bpm)) BPM"
+    func getArtWork() -> MPMediaItemArtwork {
         let image = UIImage(cgImage: self.genre.cgImage)
-        nowPlayingInfo[MPMediaItemPropertyArtwork] =
-            MPMediaItemArtwork(boundsSize: image.size, requestHandler: { size in
-                return image
-            })
-        
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedPlaybackTime
-        
-        
-        let audioNodeFileLength = AVAudioFrameCount(self.genre.loop.length)
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = Double(Double(audioNodeFileLength) / 44100)
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = elapsedPlaybackTime / Double(Double(audioNodeFileLength) / 44100)
-
-        nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = 1.0
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = playing ? speedControl.rate : 0.0
-        
+        return MPMediaItemArtwork(boundsSize: image.size, requestHandler: { size in
+            return image
+        })
+    }
+    
+    func setupNowPlaying(playing:Bool=false) {
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = self.genre.name
+        nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = MPNowPlayingInfoMediaType.audio.rawValue
+        nowPlayingInfo[MPMediaItemPropertyArtist] = "\(Int(self.bpm)) BPM"
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = self.getArtWork()
+//        let elapsed = elapsedPlaybackTime()
+//        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsed
+//        let audioNodeFileLength = AVAudioFrameCount(self.genre.loop.length)
+//        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = Double(Double(audioNodeFileLength) / 44100)
+//        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = elapsed
+//            / Double(Double(audioNodeFileLength) / 44100)
+//        nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = NSNumber(value:1.0)
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: playing ? speedControl.rate : 0.0)
         nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-        nowPlayingInfoCenter.playbackState = playing ? .playing : .paused
         
-        NSLog("%@", "**** Set playback info: rate \(String(describing: nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate])), genre \(String(describing: nowPlayingInfo[MPMediaItemPropertyTitle]))")
+        print("PLAYING: \(playing)")
+        print(nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] as Any)
+        print(nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackProgress] as Any)
+        print(nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] as Any
+        )
+        print(nowPlayingInfoCenter.playbackState.rawValue)
+        print("END")
         
     }
 }
